@@ -1,9 +1,9 @@
 package controllers
 
 import (
+	"github.com/flockapp/flock_server/controllers/api"
 	"github.com/gorilla/mux"
 	"net/http"
-	"github.com/flockapp/flock_server/controllers/api"
 )
 
 func GetRoutes() *mux.Router {

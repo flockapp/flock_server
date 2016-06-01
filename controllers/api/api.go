@@ -1,10 +1,10 @@
 package api
 
 import (
-	"net/http"
 	"encoding/json"
 	"fmt"
 	"github.com/flockapp/flock_server/models"
+	"net/http"
 )
 
 func V0_Get_API(w http.ResponseWriter, r *http.Request) {
@@ -26,4 +26,3 @@ func JSONResponse(w http.ResponseWriter, d interface{}, c int) {
 	w.WriteHeader(c)
 	fmt.Fprintf(w, "%s", dj)
 }
-

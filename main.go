@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"github.com/flockapp/flock_server/controllers"
 	"github.com/flockapp/flock_server/models"
 	"net/http"
-	"github.com/flockapp/flock_server/controllers"
-	"fmt"
 )
 
 func main() {

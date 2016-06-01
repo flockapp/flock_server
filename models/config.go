@@ -1,9 +1,9 @@
 package models
 
 import (
-	"io/ioutil"
-	"fmt"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 )
 
 type Config struct {
