@@ -25,5 +25,6 @@ func JSONResponse(w http.ResponseWriter, d interface{}, c int) {
 	//CORS
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(c)
+	fmt.Printf("Response: %v\n", d)
 	fmt.Fprintf(w, "%s", dj)
 }

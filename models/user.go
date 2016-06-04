@@ -29,7 +29,6 @@ func (u *User) VerifyPassword(password string) error {
 	return err
 }
 
-
 func (user *User) Save() error {
 	passBytes, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
