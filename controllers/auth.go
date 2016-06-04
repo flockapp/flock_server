@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"net/http"
+	"fmt"
 	"github.com/flockapp/flock_server/controllers/api"
 	"github.com/flockapp/flock_server/models"
 	"github.com/flockapp/flock_server/utils"
-	"fmt"
+	"net/http"
+	"encoding/json"
 )
 
 func AUTH_Post_Register(w http.ResponseWriter, r *http.Request) {
@@ -16,15 +17,14 @@ func AUTH_Post_Register(w http.ResponseWriter, r *http.Request) {
 		}, 500)
 		return
 	}
-
-	username := r.FormValue("username")
-	password := r.FormValue("password")
-	fullName := r.FormValue("name")
-
-	user := models.User{
-		Username: username,
-		FullName: fullName,
-		Password: password,
+	decoder := json.NewDecoder(r.Body)
+	user := models.User{}
+	if err := decoder.Decode(&user); err != nil {
+		api.JSONResponse(w, models.Response{
+			Success: false,
+			Message: "Internal Server Error.",
+		}, 500)
+		return
 	}
 	if err := user.Save(); err != nil {
 		api.JSONResponse(w, models.Response{
@@ -39,7 +39,6 @@ func AUTH_Post_Register(w http.ResponseWriter, r *http.Request) {
 	}, 200)
 }
 
-
 func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
 	//Parse request form
 	if err := r.ParseForm(); err != nil {
@@ -49,10 +48,18 @@ func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
 		}, 500)
 		return
 	}
-	//Extract form values
-	username := r.FormValue("username")
-	password := r.FormValue("password")
-	user, err := models.FindUserByUsername(username)
+	//Extract json values
+	decoder := json.NewDecoder(r.Body)
+	pendingUser := models.User{}
+	if err := decoder.Decode(&pendingUser); err != nil {
+		fmt.Printf("Error Occured: %v\n", err)
+		api.JSONResponse(w, models.Response{
+			Success: false,
+			Message: "Internal server error",
+		}, 500)
+		return
+	}
+	user, err := models.FindUserByUsername(pendingUser.Username)
 	if err != nil {
 		api.JSONResponse(w, models.Response{
 			Success: false,
@@ -61,7 +68,7 @@ func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Compare password in request form against db record
-	if err := user.VerifyPassword(password); err != nil {
+	if err := user.VerifyPassword(pendingUser.Password); err != nil {
 		api.JSONResponse(w, models.Response{
 			Success: false,
 			Message: "Invalid username/password",
@@ -80,7 +87,6 @@ func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
 	api.JSONResponse(w, models.Response{
 		Success: true,
 		Message: "Successfully logged in",
-		Data: token,
+		Data:    token,
 	}, 200)
 }
-
