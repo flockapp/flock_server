@@ -61,6 +61,7 @@ func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
 	}
 	user, err := models.FindUserByUsername(pendingUser.Username)
 	if err != nil {
+		fmt.Printf("Error finding user: %v\n", err)
 		api.JSONResponse(w, models.Response{
 			Success: false,
 			Message: "Invalid username/password",
@@ -69,6 +70,7 @@ func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
 	}
 	//Compare password in request form against db record
 	if err := user.VerifyPassword(pendingUser.Password); err != nil {
+		fmt.Printf("Error verifying user password: %v\n", err)
 		api.JSONResponse(w, models.Response{
 			Success: false,
 			Message: "Invalid username/password",
