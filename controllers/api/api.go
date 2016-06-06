@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func V0_Get_API(w http.ResponseWriter, r *http.Request) {
+func API_Get_API(w http.ResponseWriter, r *http.Request) {
 	JSONResponse(w, models.Response{
 		Success: true,
 		Message: "Server is healthy.",

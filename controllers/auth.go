@@ -10,13 +10,6 @@ import (
 )
 
 func AUTH_Post_Register(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		api.JSONResponse(w, models.Response{
-			Success: false,
-			Message: "Failed to login",
-		}, 500)
-		return
-	}
 	decoder := json.NewDecoder(r.Body)
 	user := models.User{}
 	if err := decoder.Decode(&user); err != nil {
@@ -48,20 +41,11 @@ func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
 		}, 500)
 		return
 	}
-	//Extract json values
-	decoder := json.NewDecoder(r.Body)
-	pendingUser := models.User{}
-	if err := decoder.Decode(&pendingUser); err != nil {
-		fmt.Printf("Error Occured: %v\n", err)
-		api.JSONResponse(w, models.Response{
-			Success: false,
-			Message: "Internal server error",
-		}, 500)
-		return
-	}
-	user, err := models.FindUserByUsername(pendingUser.Username)
+	//Extract form values
+	username := r.FormValue("username")
+	password := r.FormValue("password")
+	user, err := models.FindUserByUsername(username)
 	if err != nil {
-		fmt.Printf("Error finding user: %v\n", err)
 		api.JSONResponse(w, models.Response{
 			Success: false,
 			Message: "Invalid username/password",
@@ -69,8 +53,7 @@ func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Compare password in request form against db record
-	if err := user.VerifyPassword(pendingUser.Password); err != nil {
-		fmt.Printf("Error verifying user password: %v\n", err)
+	if err := user.VerifyPassword(password); err != nil {
 		api.JSONResponse(w, models.Response{
 			Success: false,
 			Message: "Invalid username/password",
