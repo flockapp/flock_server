@@ -9,7 +9,6 @@ type User struct {
 	Username string  `json:"username"`
 	FullName string  `json:"fullName"`
 	Password string  `json:"password"`
-	Events   []Event `gorm:"many2many:user_events;"`
 }
 
 func FindUserById(id int64) (User, error) {

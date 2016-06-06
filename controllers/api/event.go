@@ -5,6 +5,7 @@ import (
 	"github.com/flockapp/flock_server/utils"
 	"fmt"
 	"github.com/flockapp/flock_server/models"
+	"encoding/json"
 )
 
 func API_Get_Events(w http.ResponseWriter, r *http.Request) {
@@ -33,6 +34,37 @@ func API_Get_Events(w http.ResponseWriter, r *http.Request) {
 	}, 200)
 }
 
-//func API_Create_Event(w http.ResponseWriter, r *http.Request) {
-//
-//}
+func API_Create_Event(w http.ResponseWriter, r *http.Request) {
+	event := models.Event{}
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&event); err != nil {
+		fmt.Printf("Failed to parse json: %v\n", err)
+		JSONResponse(w, models.Response{
+			Success: false,
+			Message: "Internal server error.",
+		}, 500)
+		return
+	}
+	user, err := utils.GetCurrentUser(r)
+	if err != nil {
+		fmt.Printf("Failed to get user: %v\n", err)
+		JSONResponse(w, models.Response{
+			Success: false,
+			Message: "Internal server error.",
+		}, 500)
+		return
+	}
+	event.HostId = user.Id
+	if err := event.Save(); err != nil {
+		fmt.Printf("Failed to get save event: %v\n", err)
+		JSONResponse(w, models.Response{
+			Success: false,
+			Message: "Internal server error.",
+		}, 500)
+		return
+	}
+	JSONResponse(w, models.Response{
+		Success: true,
+		Message: "Successfully created event",
+	}, 200)
+}

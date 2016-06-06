@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 CREATE TABLE IF NOT EXISTS `event` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `hostId` bigint(20) NOT NULL REFERENCES user(`hostId`),
+  `host_id` bigint(20) NOT NULL REFERENCES user(`host_id`),
   `name` varchar(255),
   `time` DATETIME,
   `lat` float,
