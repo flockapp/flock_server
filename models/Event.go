@@ -20,6 +20,9 @@ type Event struct {
 
 func GetEventsByUserId(id int64) (*[]Event, error) {
 	eventList := []Event{}
-	err := db.Where("hostId = ?", id).Find(Event{}, &eventList).Error
-	return &eventList, err
+	query := db.Where("hostId = ?", id).Find(Event{}, &eventList)
+	if query.RecordNotFound() || query.Error == nil {
+		return &eventList, nil
+	}
+	return nil, query.Error
 }

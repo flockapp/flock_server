@@ -33,18 +33,16 @@ func AUTH_Post_Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
-	//Parse request form
-	if err := r.ParseForm(); err != nil {
+	decoder := json.NewDecoder(r.Body)
+	pending_user := models.User{}
+	if err := decoder.Decode(&pending_user); err != nil {
 		api.JSONResponse(w, models.Response{
 			Success: false,
-			Message: "Failed to login",
+			Message: "Internal Server Error.",
 		}, 500)
 		return
 	}
-	//Extract form values
-	username := r.FormValue("username")
-	password := r.FormValue("password")
-	user, err := models.FindUserByUsername(username)
+	user, err := models.FindUserByUsername(pending_user.Username)
 	if err != nil {
 		api.JSONResponse(w, models.Response{
 			Success: false,
@@ -53,7 +51,7 @@ func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Compare password in request form against db record
-	if err := user.VerifyPassword(password); err != nil {
+	if err := user.VerifyPassword(pending_user.Password); err != nil {
 		api.JSONResponse(w, models.Response{
 			Success: false,
 			Message: "Invalid username/password",
