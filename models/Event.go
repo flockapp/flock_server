@@ -27,7 +27,7 @@ func (e *Event) Save() error {
 
 func GetEventsByUserId(id int64) (*[]Event, error) {
 	eventList := []Event{}
-	query := db.Where("hostId = ?", id).Find(Event{}, &eventList)
+	query := db.Where("host_id = ?", id).Find(&eventList, &Event{})
 	if query.RecordNotFound() || query.Error == nil {
 		return &eventList, nil
 	}
