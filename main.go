@@ -5,6 +5,7 @@ import (
 	"github.com/flockapp/flock_server/controllers"
 	"github.com/flockapp/flock_server/models"
 	"net/http"
+	"log"
 )
 
 func main() {
@@ -13,6 +14,6 @@ func main() {
 	}
 	fmt.Println("Listening on port", models.Conf.Port[1:])
 	if err := http.ListenAndServe(models.Conf.Port, controllers.GetRoutes()); err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }
