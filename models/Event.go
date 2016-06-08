@@ -3,12 +3,13 @@ package models
 import "fmt"
 
 type Event struct {
-	Id     int64     `json:"id"`
-	HostId int64     `json:"-"`
-	Name   string    `json:"name"`
-	Time   int64    `json:"time"`
-	Lat    float64   `json:"lat"`
-	Lng    float64   `json:"lng"`
+	Id     int64   `json:"id"`
+	HostId int64   `json:"-"`
+	Name   string  `json:"name"`
+	Time   int64   `json:"time"`
+	Cost   int64   `json:"cost"`
+	Lat    float64 `json:"lat"`
+	Lng    float64 `json:"lng"`
 	Types  []int64 `json:"types" gorm:"-"`
 }
 
@@ -24,6 +25,8 @@ func (e *Event) Save() error {
 	}
 	return nil
 }
+
+//TODO: Add event field validation
 
 func GetEventsByUserId(id int64) (*[]Event, error) {
 	eventList := []Event{}

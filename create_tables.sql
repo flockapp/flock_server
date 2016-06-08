@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `host_id` bigint(20) NOT NULL REFERENCES user(`host_id`),
   `name` varchar(255),
+  `cost` tinyint(1),
   `time` bigint(20),
   `lat` float,
   `lng` float,

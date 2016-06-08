@@ -1,11 +1,11 @@
 package api
 
 import (
-	"net/http"
-	"github.com/flockapp/flock_server/utils"
+	"encoding/json"
 	"fmt"
 	"github.com/flockapp/flock_server/models"
-	"encoding/json"
+	"github.com/flockapp/flock_server/utils"
+	"net/http"
 )
 
 func API_Get_Events(w http.ResponseWriter, r *http.Request) {
@@ -29,7 +29,7 @@ func API_Get_Events(w http.ResponseWriter, r *http.Request) {
 	}
 	JSONResponse(w, models.Response{
 		Success: true,
-		Data: eventList,
+		Data:    eventList,
 		Message: "Successfully retrieved events",
 	}, 200)
 }
@@ -65,6 +65,7 @@ func API_Create_Event(w http.ResponseWriter, r *http.Request) {
 	}
 	JSONResponse(w, models.Response{
 		Success: true,
+		Data:    event,
 		Message: "Successfully created event",
 	}, 200)
 }
