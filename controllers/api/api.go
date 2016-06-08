@@ -8,6 +8,7 @@ import (
 )
 
 func API_Get_API(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf("Request entered")
 	JSONResponse(w, models.Response{
 		Success: true,
 		Message: "Server is healthy.",
