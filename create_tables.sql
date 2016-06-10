@@ -35,6 +35,6 @@ CREATE TABLE IF NOT EXISTS `eventType` (
 
 CREATE TABLE IF NOT EXISTS `userEvent` (
   `userId` bigint(20) NOT NULL REFERENCES user(`userId`),
-  `eventId` bigint(20) NOT NULL REFERENCES event(`evenId`)
+  `eventId` bigint(20) NOT NULL REFERENCES event(`evenId`),
   PRIMARY KEY (`userId`, `eventId`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
