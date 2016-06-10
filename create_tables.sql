@@ -32,3 +32,9 @@ CREATE TABLE IF NOT EXISTS `eventType` (
   `typeId` bigint(20) NOT NULL REFERENCES type(`typeId`),
   PRIMARY KEY (`eventId`, `typeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `userEvent` (
+  `userId` bigint(20) NOT NULL REFERENCES user(`userId`),
+  `eventId` bigint(20) NOT NULL REFERENCES event(`evenId`)
+  PRIMARY KEY (`userId`, `eventId`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
