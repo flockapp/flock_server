@@ -36,3 +36,9 @@ func GetEventsByUserId(id int64) (*[]Event, error) {
 	}
 	return nil, query.Error
 }
+
+func GetEventById(id int64) (*Event, error) {
+	event := Event{}
+	err := db.Where("id = ?", id).First(&event, Event{}).Error
+	return &event, err
+}

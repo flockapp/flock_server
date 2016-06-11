@@ -42,7 +42,7 @@ func AUTH_Post_Login(w http.ResponseWriter, r *http.Request) {
 		}, 500)
 		return
 	}
-	user, err := models.FindUserByUsername(pending_user.Username)
+	user, err := models.GetUserByUsername(pending_user.Username)
 	if err != nil {
 		api.JSONResponse(w, models.Response{
 			Success: false,

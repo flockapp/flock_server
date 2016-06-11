@@ -42,7 +42,7 @@ func RequireUserToken(handler http.Handler) http.HandlerFunc {
 			return
 		}
 		newId := int64(userId)
-		user, err := models.FindUserById(newId)
+		user, err := models.GetUserById(newId)
 		if err != nil {
 			fmt.Printf("3")
 			api.JSONResponse(w, models.Response{

@@ -11,13 +11,13 @@ type User struct {
 	Password string  `json:"password"`
 }
 
-func FindUserById(id int64) (User, error) {
+func GetUserById(id int64) (User, error) {
 	user := User{}
 	err := db.Where("id = ?", id).First(&user).Error
 	return user, err
 }
 
-func FindUserByUsername(username string) (User, error) {
+func GetUserByUsername(username string) (User, error) {
 	user := User{}
 	err := db.Where("username = ?", username).First(&user).Error
 	return user, err
