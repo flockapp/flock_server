@@ -26,6 +26,12 @@ func (e *Event) Save() error {
 	return nil
 }
 
+func (e *Event) AddGuestById(id int64) error {
+	err := db.Exec("INSERT INTO userEvent VALUES (?, ?)", id, e.Id).Error
+	return err
+
+}
+
 //TODO: Add event field validation
 
 func GetEventsByUserId(id int64) (*[]Event, error) {
@@ -37,8 +43,16 @@ func GetEventsByUserId(id int64) (*[]Event, error) {
 	return nil, query.Error
 }
 
+func GetGuestEventsByUserId(id int64) (*[]Event, error) {
+	eventList := []Event{}
+	query := db.Raw("SELECT * FROM event JOIN userEvent ON userEvent.userId = ? WHERE event.id = userEvent.eventId", id).Scan(&eventList)
+	return &eventList, query.Error
+}
+
 func GetEventById(id int64) (*Event, error) {
 	event := Event{}
 	err := db.Where("id = ?", id).First(&event, Event{}).Error
 	return &event, err
 }
+
+
