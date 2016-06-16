@@ -10,7 +10,7 @@ type Event struct {
 	Cost   int64   `json:"cost"`
 	Lat    float64 `json:"lat"`
 	Lng    float64 `json:"lng"`
-	Types  []int64 `json:"types" gorm:"-"`
+	Types  []int64 `json:"types,omitempty" gorm:"-"`
 }
 
 func (e *Event) Save() error {

@@ -87,6 +87,7 @@ func API_Get_Event_Details(w http.ResponseWriter, r *http.Request) {
 		JSONResponse(w, failResp, 500)
 		return
 	}
+	fmt.Printf("debug eventId: %v\n", eventId);
 	event, err := models.GetEventById(int64(eventId))
 	if err != nil {
 		fmt.Printf("Unable to get event: %v\n", err)
