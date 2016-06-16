@@ -6,6 +6,8 @@ import (
 	"github.com/flockapp/flock_server/models"
 	"github.com/flockapp/flock_server/utils"
 	"net/http"
+	"github.com/gorilla/mux"
+	"strconv"
 )
 
 func API_Get_Events(w http.ResponseWriter, r *http.Request) {
@@ -69,3 +71,37 @@ func API_Create_Event(w http.ResponseWriter, r *http.Request) {
 		Message: "Successfully created event",
 	}, 200)
 }
+
+func API_Get_Event_Details(w http.ResponseWriter, r *http.Request) {
+	eventId, err := strconv.Atoi(mux.Vars(r)["eventId"])
+	if err != nil {
+		fmt.Printf("Invalid event id: %v\n", err)
+		failResp := models.Response{Success: false, Message: "Invalid event Id"}
+		JSONResponse(w, failResp, 400)
+		return
+	}
+	user, err := utils.GetCurrentUser(r)
+	if err != nil {
+		fmt.Printf("Unable to get current user: %v\n", err)
+		failResp := models.Response{Success: false, Message: "Internal server error."}
+		JSONResponse(w, failResp, 500)
+		return
+	}
+	event, err := models.GetEventById(int64(eventId))
+	if err != nil {
+		fmt.Printf("Unable to get event: %v\n", err)
+		failResp := models.Response{Success: false, Message: "Unable to get event"}
+		JSONResponse(w, failResp, 400)
+		return
+	}
+	if event.HostId != user.Id {
+		fmt.Println("User does not own event")
+		failResp := models.Response{Success: false, Message: "User does not own event"}
+		JSONResponse(w, failResp, 400)
+		return
+	}
+	successResp := models.Response{Success: true, Data: event, Message: "Successfully retrieved event details"}
+	JSONResponse(w, successResp, 200)
+
+}
+
