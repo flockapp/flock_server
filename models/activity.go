@@ -4,13 +4,10 @@ import "time"
 
 type Activity struct {
 	Id        int64     `json:"id"`
-	Name      string    `json:"name"`
-	EventId   int64     `json:"-"`
+	EventId   int64     `json:"eventId"`
+	PlaceId   string    `json:"placeId"`
 	StartTime time.Time `json:"startTime"`
 	EndTime   time.Time `json:"endTime"`
-	ImageUrl  string    `json:"imageUrl"`
-	Lat       float64   `json:"lat"`
-	Lng       float64   `json:"lng"`
-	Type      string    `json:"type"`
+	Types     []Type    `json:"types" gorm:"-"`
 	Desc      string    `json:"desc"`
 }

@@ -1,12 +1,12 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/flockapp/flock_server/controllers/api"
 	"github.com/flockapp/flock_server/models"
 	"github.com/flockapp/flock_server/utils"
 	"net/http"
-	"encoding/json"
 )
 
 func AUTH_Post_Register(w http.ResponseWriter, r *http.Request) {

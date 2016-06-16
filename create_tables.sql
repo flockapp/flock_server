@@ -1,6 +1,7 @@
-use flock;
+CREATE DATABASE `flock`;
+use `flock`;
 
-DROP TABLE IF EXISTS `user`, `event`, `type`, `eventType`;
+DROP TABLE IF EXISTS `user`, `event`, `type`, `eventType`, `userEvent`;
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,

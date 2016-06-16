@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/flockapp/flock_server/controllers"
 	"github.com/flockapp/flock_server/models"
-	"net/http"
 	"log"
+	"net/http"
 )
 
 func main() {
