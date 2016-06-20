@@ -1,7 +1,5 @@
 package models
 
-import "fmt"
-
 type Event struct {
 	Id     int64   `json:"id"`
 	HostId int64   `json:"-"`
@@ -10,16 +8,19 @@ type Event struct {
 	Cost   int64   `json:"cost"`
 	Lat    float64 `json:"lat"`
 	Lng    float64 `json:"lng"`
-	Types  []int64 `json:"types,omitempty" gorm:"-"`
+	Types  []string `json:"types,omitempty" gorm:"-"`
 }
 
 func (e *Event) Save() error {
 	if err := db.Save(&e).Error; err != nil {
 		return err
 	}
-	for _, val := range e.Types {
-		fmt.Println(val)
-		if err := db.Exec("INSERT INTO `eventType` VALUES (?, ?)", e.Id, val).Error; err != nil {
+	for _, name := range e.Types {
+		typeInst, err := GetTypeByName(name)
+		if err != nil {
+			return err
+		}
+		if err := db.Exec("INSERT INTO `eventType` VALUES (?, ?)", e.Id, typeInst.Id).Error; err != nil {
 			return err
 		}
 	}
