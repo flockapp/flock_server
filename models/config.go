@@ -16,6 +16,7 @@ var Conf Config
 
 func init() {
 	jsonData, err := ioutil.ReadFile("config.json")
+	fmt.Printf("DBPATH: %v\n", Conf.DatabasePath)
 	if err != nil {
 		panic(fmt.Sprintf("Error reading config vars %v\n", err))
 	}
