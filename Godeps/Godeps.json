@@ -42,6 +42,22 @@
 		{
 			"ImportPath": "golang.org/x/crypto/blowfish",
 			"Rev": "f3241ce8505855877cc8a9717bd61a0f7c4ea83c"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "bc3663df0ac92f928d419e31e0d2af22e683a5a2"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context/ctxhttp",
+			"Rev": "bc3663df0ac92f928d419e31e0d2af22e683a5a2"
+		},
+		{
+			"ImportPath": "googlemaps.github.io/maps",
+			"Rev": "3ea5feb3a3848bae291910e27464a6bd6587241b"
+		},
+		{
+			"ImportPath": "googlemaps.github.io/maps/internal",
+			"Rev": "3ea5feb3a3848bae291910e27464a6bd6587241b"
 		}
 	]
 }
