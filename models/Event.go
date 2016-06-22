@@ -12,9 +12,6 @@ type Event struct {
 }
 
 func (e *Event) Save() error {
-	if err := db.Save(&e).Error; err != nil {
-		return err
-	}
 	for _, name := range e.Types {
 		typeInst, err := GetTypeByName(name)
 		if err != nil {
@@ -24,7 +21,7 @@ func (e *Event) Save() error {
 			return err
 		}
 	}
-	return nil
+	return db.Save(&e).Error
 }
 
 func (e *Event) AddGuestById(id int64) error {

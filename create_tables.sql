@@ -34,8 +34,28 @@ CREATE TABLE IF NOT EXISTS `eventType` (
   PRIMARY KEY (`eventId`, `typeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE IF NOT EXISTS `activityType` (
+  `activityId` bigint(20) NOT NULL REFERENCES event(`activityId`),
+  `typeId` bigint(20) NOT NULL REFERENCES type(`typeId`),
+  PRIMARY KEY (`activityId`, `typeId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS `userEvent` (
   `userId` bigint(20) NOT NULL REFERENCES user(`userId`),
   `eventId` bigint(20) NOT NULL REFERENCES event(`evenId`),
   PRIMARY KEY (`userId`, `eventId`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `activity` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `eventId` bigint(20) NOT NULL REFERENCES event(`eventId`),
+  `placeId` VARCHAR(255) NOT NULL,
+  `rating` float,
+  `lat` float,
+  `lng` float,
+  `cost` float,
+  `startTime` bigint(20),
+  `endTime` bigint(20),
+  `desc` varchar(512),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
