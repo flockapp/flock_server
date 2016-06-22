@@ -19,6 +19,7 @@ func GetRoutes() *mux.Router {
 	apiRouter.HandleFunc("/events/guests", Use(api.API_Get_Guest_Events, RequireUserToken)).Methods("GET")
 	apiRouter.HandleFunc("/events/guests", Use(api.API_Put_Guest_Into_Event, RequireUserToken)).Methods("PUT")
 	apiRouter.HandleFunc("/events/{eventId}/guests", Use(api.API_Get_Guests_From_Event, RequireUserToken)).Methods("GET")
+	apiRouter.HandleFunc("/events/{eventId}/recommendations", Use(api.API_Get_Recommendations, RequireUserToken)).Methods("GET")
 
 	authRouter := router.PathPrefix("/auth").Subrouter()
 	authRouter.HandleFunc("/login", AUTH_Post_Login).Methods("POST")

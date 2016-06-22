@@ -63,13 +63,7 @@ func API_Put_Guest_Into_Event(w http.ResponseWriter, r *http.Request) {
 
 
 func API_Get_Guests_From_Event(w http.ResponseWriter, r *http.Request) {
-	user, err := utils.GetCurrentUser(r)
-	if err != nil {
-		fmt.Printf("Error getting user: %v\n", err)
-		failResp := models.Response{Success: false, Message: "Internal server error.", }
-		JSONResponse(w, failResp, 500)
-		return
-	}
+	user, _ := utils.GetCurrentUser(r)
 	eventId, err := strconv.Atoi(mux.Vars(r)["eventId"])
 	if err != nil {
 		fmt.Printf("Invalid event ID: %v\n", err)
@@ -84,7 +78,7 @@ func API_Get_Guests_From_Event(w http.ResponseWriter, r *http.Request) {
 		JSONResponse(w, failResp, 400)
 		return
 	}
-	if event.HostId != user.Id {
+	if err := event.VerifyHostFromRequest(user); err != nil {
 		failResp := models.Response{Success: false, Message: "User does not own event", }
 		JSONResponse(w, failResp, 400)
 		return

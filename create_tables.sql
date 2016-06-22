@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `activity` (
   `rating` float,
   `lat` float,
   `lng` float,
-  `cost` float,
+  `cost` tinyint,
   `startTime` bigint(20),
   `endTime` bigint(20),
   `desc` varchar(512),

@@ -10,6 +10,7 @@ type Config struct {
 	DatabasePath string `json:"dbPath"`
 	Port         string `json:"port"`
 	SigningKey   string `json:"signingKey"`
+	GoogleApiKey string `json:"googleApi"`
 }
 
 var Conf Config
